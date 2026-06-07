@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio – Nguyễn Nhật Minh</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #0d0f14;
+      --surface:  #141720;
+      --border:   #1e2330;
+      --accent:   #5c7cfa;
+      --accent2:  #3bc9db;
+      --text:     #c9d1d9;
+      --text-dim: #6e7681;
+      --text-head:#e6edf3;
+      --tag-bg:   #1c2333;
+      --success:  #3fb950;
+      --warn:     #d29922;
+      --mono:     'IBM Plex Mono', monospace;
+      --sans:     'IBM Plex Sans', sans-serif;
+      --display:  'Space Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 15px;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    /* ─── SIDEBAR ─── */
+    .layout { display: flex; min-height: 100vh; }
+
+    .sidebar {
+      width: 260px;
+      min-height: 100vh;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      padding: 0;
+      flex-shrink: 0;
+    }
+
+    .sidebar-header {
+      padding: 28px 24px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .avatar-ring {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      border: 2px solid var(--accent);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--display);
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--accent);
+      background: #1a1f2e;
+      margin-bottom: 12px;
+      letter-spacing: -1px;
+    }
+
+    .sidebar-name {
+      font-family: var(--display);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-head);
+      letter-spacing: 0.03em;
+      line-height: 1.3;
+    }
+
+    .sidebar-meta {
+      font-size: 11px;
+      color: var(--text-dim);
+      font-family: var(--mono);
+      margin-top: 4px;
+    }
+
+    .badge {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--success);
+      background: rgba(63,185,80,.12);
+      border: 1px solid rgba(63,185,80,.25);
+      border-radius: 20px;
+      padding: 1px 8px;
+      margin-top: 8px;
+    }
+
+    .sidebar nav { padding: 12px 0; flex: 1; }
+    .nav-section { padding: 10px 24px 4px; font-size: 10px; letter-spacing: .1em; color: var(--text-dim); font-family: var(--mono); text-transform: uppercase; }
+
+    .nav-item {
+      display: flex; align-items: center; gap: 9px;
+      padding: 8px 24px;
+      color: var(--text-dim);
+      font-size: 13px;
+      font-family: var(--sans);
+      text-decoration: none;
+      transition: all .18s;
+      border-left: 3px solid transparent;
+      cursor: pointer;
+    }
+    .nav-item:hover, .nav-item.active {
+      color: var(--text-head);
+      background: rgba(92,124,250,.07);
+      border-left-color: var(--accent);
+    }
+    .nav-icon { font-size: 14px; width: 18px; text-align: center; }
+
+    .sidebar-footer {
+      padding: 16px 24px;
+      border-top: 1px solid var(--border);
+      font-size: 11px;
+      color: var(--text-dim);
+      font-family: var(--mono);
+    }
+    .sidebar-footer span { display: block; }
+    .sidebar-footer a { color: var(--accent); text-decoration: none; }
+    .sidebar-footer a:hover { text-decoration: underline; }
+
+    /* ─── MAIN ─── */
+    .main { flex: 1; overflow-x: hidden; }
+
+    /* Hero */
+    .hero {
+      padding: 60px 56px 40px;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(135deg, #0d0f14 0%, #141a2e 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 600px 300px at 80% 50%, rgba(92,124,250,.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-eyebrow {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .hero h1 {
+      font-family: var(--display);
+      font-size: clamp(28px, 4vw, 44px);
+      color: var(--text-head);
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 6px;
+    }
+    .hero-sub {
+      font-family: var(--mono);
+      font-size: 14px;
+      color: var(--accent2);
+      margin-bottom: 18px;
+    }
+    .hero-desc {
+      max-width: 580px;
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.8;
+      margin-bottom: 28px;
+    }
+    .hero-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+    .pill {
+      font-family: var(--mono);
+      font-size: 11px;
+      padding: 4px 12px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      background: var(--tag-bg);
+    }
+    .pill.highlight {
+      border-color: rgba(92,124,250,.4);
+      color: var(--accent);
+      background: rgba(92,124,250,.08);
+    }
+
+    /* Section */
+    section {
+      padding: 44px 56px;
+      border-bottom: 1px solid var(--border);
+    }
+    section:last-child { border-bottom: none; }
+
+    .section-label {
+      display: flex; align-items: center; gap: 10px;
+      font-family: var(--display);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 28px;
+    }
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .section-title {
+      font-family: var(--display);
+      font-size: 20px;
+      color: var(--text-head);
+      margin-bottom: 6px;
+    }
+
+    /* Cards */
+    .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 22px;
+      transition: border-color .2s, box-shadow .2s;
+      position: relative;
+    }
+    .card:hover {
+      border-color: rgba(92,124,250,.4);
+      box-shadow: 0 0 0 1px rgba(92,124,250,.15), 0 4px 24px rgba(0,0,0,.4);
+    }
+
+    .card-num {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--text-dim);
+      margin-bottom: 10px;
+    }
+    .card-title {
+      font-family: var(--display);
+      font-size: 14px;
+      color: var(--text-head);
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+    .card-desc {
+      font-size: 13px;
+      color: var(--text-dim);
+      line-height: 1.65;
+      margin-bottom: 14px;
+    }
+
+    /* Tags */
+    .tag-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+    .tag {
+      font-family: var(--mono);
+      font-size: 10px;
+      padding: 3px 8px;
+      border-radius: 3px;
+      background: var(--tag-bg);
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+    }
+    .tag.blue { color: #79c0ff; border-color: rgba(121,192,255,.25); background: rgba(121,192,255,.06); }
+    .tag.green { color: var(--success); border-color: rgba(63,185,80,.25); background: rgba(63,185,80,.06); }
+    .tag.yellow { color: var(--warn); border-color: rgba(210,153,34,.25); background: rgba(210,153,34,.06); }
+    .tag.purple { color: #d2a8ff; border-color: rgba(210,168,255,.25); background: rgba(210,168,255,.06); }
+
+    /* Download button */
+    .dl-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--accent);
+      text-decoration: none;
+      border: 1px solid rgba(92,124,250,.35);
+      border-radius: 4px;
+      padding: 5px 12px;
+      background: rgba(92,124,250,.06);
+      transition: all .18s;
+      margin-top: 6px;
+    }
+    .dl-btn:hover {
+      background: rgba(92,124,250,.14);
+      border-color: var(--accent);
+    }
+
+    /* Assignment block */
+    .assign-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: 16px;
+      overflow: hidden;
+    }
+    .assign-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 22px;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+    }
+    .assign-header:hover { background: rgba(92,124,250,.04); }
+    .assign-id { font-family: var(--mono); font-size: 11px; color: var(--accent); }
+    .assign-name { font-family: var(--display); font-size: 13px; color: var(--text-head); }
+    .assign-meta { font-size: 11px; color: var(--text-dim); font-family: var(--mono); }
+    .assign-body { padding: 18px 22px; }
+    .assign-desc { font-size: 13px; color: var(--text); line-height: 1.7; margin-bottom: 12px; }
+
+    /* Key-value info */
+    .kv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 24px; margin: 20px 0; }
+    .kv { border-left: 2px solid var(--border); padding-left: 12px; }
+    .kv-key { font-family: var(--mono); font-size: 10px; color: var(--text-dim); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 2px; }
+    .kv-val { font-size: 13px; color: var(--text-head); }
+
+    /* Skills bar */
+    .skill-row { margin-bottom: 14px; }
+    .skill-label { display: flex; justify-content: space-between; font-size: 12px; font-family: var(--mono); color: var(--text-dim); margin-bottom: 5px; }
+    .skill-bar { height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
+    .skill-fill { height: 100%; border-radius: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2)); }
+
+    /* Table */
+    .data-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 12px; }
+    .data-table th { background: var(--tag-bg); color: var(--text-dim); font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: .08em; padding: 9px 12px; text-align: left; border-bottom: 1px solid var(--border); }
+    .data-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); vertical-align: top; color: var(--text); }
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table tr:hover td { background: rgba(92,124,250,.04); }
+
+    /* Timeline */
+    .timeline { position: relative; padding-left: 24px; }
+    .timeline::before { content: ''; position: absolute; left: 0; top: 6px; bottom: 6px; width: 1px; background: var(--border); }
+    .tl-item { position: relative; margin-bottom: 28px; }
+    .tl-item::before { content: ''; position: absolute; left: -28px; top: 6px; width: 9px; height: 9px; border-radius: 50%; background: var(--accent); border: 2px solid var(--bg); }
+    .tl-date { font-family: var(--mono); font-size: 11px; color: var(--accent2); margin-bottom: 3px; }
+    .tl-title { font-family: var(--display); font-size: 13px; color: var(--text-head); margin-bottom: 5px; }
+    .tl-body { font-size: 13px; color: var(--text-dim); line-height: 1.65; }
+
+    /* Code block */
+    .code-block {
+      background: #0a0c10;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 14px 18px;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: #8b949e;
+      line-height: 1.6;
+      margin-top: 10px;
+      overflow-x: auto;
+    }
+    .code-block .kw { color: #ff7b72; }
+    .code-block .str { color: #a5d6ff; }
+    .code-block .cmt { color: #6e7681; font-style: italic; }
+
+    /* Prompt showcase */
+    .prompt-card {
+      background: #0a0c10;
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 6px 6px 0;
+      padding: 14px 18px;
+      margin-bottom: 10px;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: #a5d6ff;
+      line-height: 1.7;
+    }
+    .prompt-level { font-size: 10px; color: var(--accent); margin-bottom: 5px; letter-spacing: .08em; }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #2e3649; }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .layout { flex-direction: column; }
+      .sidebar { width: 100%; height: auto; position: relative; }
+      section { padding: 32px 24px; }
+      .hero { padding: 36px 24px 28px; }
+      .kv-grid { grid-template-columns: 1fr; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="layout">
+
+  <!-- ═══ SIDEBAR ═══ -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="avatar-ring">NM</div>
+      <div class="sidebar-name">Nguyễn Nhật Minh</div>
+      <div class="sidebar-meta">25024138 · VNU1001_E252002</div>
+      <span class="badge">● Sinh viên năm 1</span>
+    </div>
+
+    <nav>
+      <div class="nav-section">Portfolio</div>
+      <a class="nav-item active" href="#about"><span class="nav-icon">◈</span>Giới thiệu</a>
+      <a class="nav-item" href="#skills"><span class="nav-icon">◉</span>Kỹ năng</a>
+      <a class="nav-item" href="#assignments"><span class="nav-icon">◫</span>Bài tập</a>
+
+      <div class="nav-section">Môn học</div>
+      <a class="nav-item" href="#assign-1"><span class="nav-icon">→</span>4.1 — Hệ điều hành</a>
+      <a class="nav-item" href="#assign-2"><span class="nav-icon">→</span>4.2 — Tổng quan tài liệu</a>
+      <a class="nav-item" href="#assign-3"><span class="nav-icon">→</span>4.2 — Prompt Engineering</a>
+      <a class="nav-item" href="#assign-4"><span class="nav-icon">→</span>4.3 — Hợp tác trực tuyến</a>
+      <a class="nav-item" href="#assign-5"><span class="nav-icon">→</span>4.2 — AI Tạo sinh</a>
+      <a class="nav-item" href="#assign-6"><span class="nav-icon">→</span>4.4 — AI có trách nhiệm</a>
+      <a class="nav-item" href="#assign-7"><span class="nav-icon">→</span>4.1 — Tổng quan bằng AI</a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <span>ĐHQG Hà Nội · UET</span>
+      <span style="margin-top:4px;">Nhập môn Khoa học Dữ liệu</span>
+      <span style="margin-top:4px;color:#3bc9db;">Nhóm 38</span>
+    </div>
+  </aside>
+
+  <!-- ═══ MAIN ═══ -->
+  <main class="main">
+
+    <!-- HERO -->
+    <div class="hero" id="about">
+      <div class="hero-eyebrow">// PORTFOLIO · 2025–2026</div>
+      <h1>Nguyễn<br/>Nhật Minh</h1>
+      <div class="hero-sub">Sinh viên Khoa học Dữ liệu · VNU-UET</div>
+      <p class="hero-desc">
+        Sinh viên năm nhất ngành Khoa học Máy tính, Trường Đại học Công nghệ — ĐHQG Hà Nội.
+        Portfolio này tổng hợp các bài tập thực hành trong môn <strong>Nhập môn Khoa học Dữ liệu</strong>,
+        từ thao tác hệ điều hành, nghiên cứu tài liệu học thuật, kỹ thuật viết prompt AI,
+        đến phân tích đạo đức khi sử dụng AI trong học tập.
+      </p>
+      <div class="hero-pills">
+        <span class="pill highlight">Python</span>
+        <span class="pill highlight">Machine Learning</span>
+        <span class="pill highlight">Prompt Engineering</span>
+        <span class="pill">Jupyter Notebook</span>
+        <span class="pill">Google Workspace</span>
+        <span class="pill">Notion</span>
+        <span class="pill">SDL2 / C++</span>
+        <span class="pill">Data Analysis</span>
+      </div>
+    </div>
+
+    <!-- PROFILE INFO -->
+    <section>
+      <div class="section-label">Thông tin cá nhân</div>
+      <div class="kv-grid">
+        <div class="kv"><div class="kv-key">Họ và tên</div><div class="kv-val">Nguyễn Nhật Minh</div></div>
+        <div class="kv"><div class="kv-key">Mã sinh viên</div><div class="kv-val">25024138</div></div>
+        <div class="kv"><div class="kv-key">Lớp</div><div class="kv-val">VNU1001_E252002</div></div>
+        <div class="kv"><div class="kv-key">Nhóm</div><div class="kv-val">Nhóm 38</div></div>
+        <div class="kv"><div class="kv-key">Trường</div><div class="kv-val">ĐH Công nghệ – ĐHQG Hà Nội</div></div>
+        <div class="kv"><div class="kv-key">Môn học</div><div class="kv-val">Nhập môn Khoa học Dữ liệu</div></div>
+        <div class="kv"><div class="kv-key">Vai trò trong nhóm</div><div class="kv-val">Tiền xử lý dữ liệu & Lập trình thuật toán</div></div>
+        <div class="kv"><div class="kv-key">Dự án nhóm</div><div class="kv-val">Phân tích lưới điện thành phố thông minh</div></div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills">
+      <div class="section-label">Kỹ năng</div>
+      <div class="card-grid" style="margin-bottom:28px;">
+        <div class="card">
+          <div class="card-title">Công cụ AI & Mô hình</div>
+          <div class="tag-row">
+            <span class="tag blue">Claude</span>
+            <span class="tag blue">Grok</span>
+            <span class="tag blue">DeepSeek</span>
+            <span class="tag blue">Llama</span>
+            <span class="tag blue">Flux AI</span>
+            <span class="tag blue">Ideogram</span>
+            <span class="tag blue">Stable Diffusion</span>
+            <span class="tag blue">Elicit</span>
+            <span class="tag blue">Consensus</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Lập trình & Dữ liệu</div>
+          <div class="tag-row">
+            <span class="tag green">Python</span>
+            <span class="tag green">C++</span>
+            <span class="tag green">Jupyter Notebook</span>
+            <span class="tag green">SDL2</span>
+            <span class="tag green">LSTM / Deep Learning</span>
+            <span class="tag green">OOP</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Công cụ cộng tác</div>
+          <div class="tag-row">
+            <span class="tag yellow">Google Drive</span>
+            <span class="tag yellow">Google Docs</span>
+            <span class="tag yellow">Notion</span>
+            <span class="tag yellow">Messenger</span>
+            <span class="tag yellow">Tableau</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="max-width:480px;">
+        <div class="skill-row">
+          <div class="skill-label"><span>Prompt Engineering</span><span>90%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-label"><span>Python / Data Analysis</span><span>72%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:72%"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-label"><span>Machine Learning (lý thuyết)</span><span>65%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:65%"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-label"><span>C++ / OOP / SDL2</span><span>60%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:60%"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-label"><span>Công cụ hợp tác số</span><span>85%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ASSIGNMENTS LIST -->
+    <section id="assignments">
+      <div class="section-label">Danh sách bài tập</div>
+      <div class="card-grid">
+        <div class="card" onclick="location.href='#assign-1'">
+          <div class="card-num">BÀI 01 · 4.1</div>
+          <div class="card-title">Thao tác File Explorer trên Windows</div>
+          <div class="card-desc">Hướng dẫn thực hành quản lý tệp tin và thư mục: tạo, đổi tên, sao chép, di chuyển, xóa và khôi phục từ Recycle Bin.</div>
+          <div class="tag-row"><span class="tag">Hệ điều hành</span><span class="tag">Windows</span><span class="tag">File Management</span></div>
+          <a href="https://raw.githubusercontent.com/Min23-tech/portfolio/main/1.4.1.docx" target="_blank" rel="noopener" class="dl-btn">↓ 1_4_1.docx</a>
+        </div>
+
+        <div class="card" onclick="location.href='#assign-2'">
+          <div class="card-num">BÀI 02 · 4.2</div>
+          <div class="card-title">Tổng quan tài liệu: ML trong dự đoán giá cổ phiếu</div>
+          <div class="card-desc">Tổng hợp, phân tích và đánh giá 12 nguồn tài liệu về ứng dụng Machine Learning trong dự đoán giá cổ phiếu.</div>
+          <div class="tag-row"><span class="tag blue">Machine Learning</span><span class="tag blue">LSTM</span><span class="tag">Tài liệu học thuật</span></div>
+          <a href="https://raw.githubusercontent.com/Min23-tech/portfolio/main/2.4.2.docx" target="_blank" rel="noopener" class="dl-btn">↓ 2_4_2.docx</a>
+        </div>
+
+        <div class="card" onclick="location.href='#assign-3'">
+          <div class="card-num">BÀI 03 · 4.2</div>
+          <div class="card-title">Prompt Engineering cho học tập</div>
+          <div class="card-desc">Xây dựng và thử nghiệm 9 prompt theo 3 cấp độ (cơ bản → cải tiến → nâng cao) cho 3 tác vụ học tập.</div>
+          <div class="tag-row"><span class="tag purple">Prompt Engineering</span><span class="tag purple">AI</span><span class="tag">Bloom's Taxonomy</span></div>
+          <a href="https://raw.githubusercontent.com/Min23-tech/portfolio/main/3.4.2%20bt.docx" target="_blank" rel="noopener" class="dl-btn">↓ 3_4_2_bt.docx</a>
+        </div>
+
+        <div class="card" onclick="location.href='#assign-4'">
+          <div class="card-num">BÀI 04 · 4.3</div>
+          <div class="card-title">Báo cáo công cụ hợp tác trực tuyến</div>
+          <div class="card-desc">Tổng kết trải nghiệm sử dụng Messenger, Google Drive, Google Docs, Notion trong dự án nhóm phân tích lưới điện.</div>
+          <div class="tag-row"><span class="tag yellow">Google Workspace</span><span class="tag yellow">Notion</span><span class="tag">Teamwork</span></div>
+          <a href="https://raw.githubusercontent.com/Min23-tech/portfolio/main/4.4.3.docx" target="_blank" rel="noopener" class="dl-btn">↓ 4_4_3.docx</a>
+        </div>
+
+        <div class="card" onclick="location.href='#assign-5'">
+          <div class="card-num">BÀI 05 · 4.2</div>
+          <div class="card-title">Ứng dụng AI tạo sinh trong sáng tạo nội dung</div>
+          <div class="card-desc">So sánh Grok, DeepSeek, Llama (text) và Flux AI, Ideogram (image) trong quy trình tạo lộ trình học C++ dạng đa phương tiện.</div>
+          <div class="tag-row"><span class="tag blue">Grok</span><span class="tag blue">DeepSeek</span><span class="tag blue">Flux AI</span><span class="tag blue">Ideogram</span></div>
+          <a href="https://raw.githubusercontent.com/Min23-tech/portfolio/main/5_4_2_new_AI.docx" target="_blank" rel="noopener" class="dl-btn">↓ 5_4_2_new_AI.docx</a>
+        </div>
+
+        <div class="card" onclick="location.href='#assign-6'">
+          <div class="card-num">BÀI 06 · 4.4</div>
+          <div class="card-title">Sử dụng AI có trách nhiệm trong học tập</div>
+          <div class="card-desc">Phân tích đạo đức sử dụng AI (Claude) khi nâng cấp game TicTacToe từ lập trình thủ tục lên OOP+SDL2.</div>
+          <div class="tag-row"><span class="tag green">Ethics</span><span class="tag green">OOP</span><span class="tag green">SDL2</span><span class="tag">C++</span></div>
+          <a href="https://raw.githubusercontent.com/Min23-tech/portfolio/main/6.4.4.docx" target="_blank" rel="noopener" class="dl-btn">↓ 6_4_4.docx</a>
+        </div>
+
+        <div class="card" onclick="location.href='#assign-7'">
+          <div class="card-num">BÀI 07 · 4.1</div>
+          <div class="card-title">Tổng quan tài liệu bằng công cụ AI</div>
+          <div class="card-desc">Dùng Elicit/Consensus tìm và so sánh 5 bài báo khoa học về ML trong phát hiện ung thư từ hình ảnh y tế.</div>
+          <div class="tag-row"><span class="tag blue">Deep Learning</span><span class="tag blue">CNN</span><span class="tag blue">Medical Imaging</span><span class="tag">Elicit</span></div>
+          <a href="https://raw.githubusercontent.com/Min23-tech/portfolio/main/7_4_1_new.docx" target="_blank" rel="noopener" class="dl-btn">↓ 7_4_1_new.docx</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ DETAIL: BÀI 01 ══ -->
+    <section id="assign-1">
+      <div class="section-label">Bài 01 · 4.1 — Hệ điều hành</div>
+      <div class="section-title">Thao tác File Explorer trên Windows</div>
+      <p style="color:var(--text-dim);font-size:13px;margin-bottom:20px;">Thực hành quản lý tệp tin và thư mục bằng giao diện đồ họa Windows.</p>
+
+      <div class="assign-block">
+        <div class="assign-header">
+          <div>
+            <div class="assign-id">12 bước thực hành</div>
+            <div class="assign-name">Quy trình từng bước</div>
+          </div>
+          <div class="assign-meta">Windows Explorer</div>
+        </div>
+        <div class="assign-body">
+          <div class="timeline">
+            <div class="tl-item">
+              <div class="tl-date">Bước 1–3</div>
+              <div class="tl-title">Mở & Điều hướng File Explorer</div>
+              <div class="tl-body">Mở bằng <code style="color:var(--accent2);font-family:var(--mono)">Win+E</code>, truy cập This PC, tạo thư mục <code style="color:var(--accent2);font-family:var(--mono)">ThucHanh_hotensinhvien</code>.</div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-date">Bước 4–7</div>
+              <div class="tl-title">Tạo, Đổi tên, Tạo thư mục con</div>
+              <div class="tl-body">Tạo file <code style="color:var(--accent2);font-family:var(--mono)">GhiChu.txt</code> → đổi tên → tạo thư mục <code style="color:var(--accent2);font-family:var(--mono)">TaiLieu</code> bên trong.</div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-date">Bước 8–9</div>
+              <div class="tl-title">Copy & Cut — Paste</div>
+              <div class="tl-body">Sao chép bằng <code style="color:var(--accent2);font-family:var(--mono)">Ctrl+C / Ctrl+V</code>. Di chuyển bằng <code style="color:var(--accent2);font-family:var(--mono)">Ctrl+X / Ctrl+V</code>.</div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-date">Bước 10–12</div>
+              <div class="tl-title">Xóa & Khôi phục từ Recycle Bin</div>
+              <div class="tl-body">Xóa thường (vào Recycle Bin) vs. xóa vĩnh viễn (<code style="color:var(--accent2);font-family:var(--mono)">Shift+Delete</code>). Khôi phục qua Restore.</div>
+            </div>
+          </div>
+          <a href="https://raw.githubusercontent.com/Min23-tech/portfolio/main/1.4.1.docx" target="_blank" rel="noopener" class="dl-btn" style="margin-top:16px;">↓ Tải file bài tập · 1_4_1.docx</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ DETAIL: BÀI 02 ══ -->
+    <section id="assign-2">
+      <div class="section-label">Bài 02 · 4.2 — Tổng quan tài liệu</div>
+      <div class="section-title">Machine Learning trong dự đoán giá cổ phiếu</div>
+      <p style="color:var(--text-dim);font-size:13px;margin-bottom:20px;">Phân tích và đánh giá độ tin cậy của 12 nguồn tài liệu học thuật &amp; internet.</p>
+
+      <div class="assign-block">
+        <div class="assign-header">
+          <div>
+            <div class="assign-id">12 nguồn tài liệu</div>
+            <div class="assign-name">Bảng đánh giá tổng hợp</div>
+          </div>
+        </div>
+        <div class="assign-body">
+          <table class="data-table">
+            <thead>
+              <tr><th>#</th><th>Tài liệu</th><th>Nguồn</th><th>Năm</th><th>Đánh giá</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td>Fama — Efficient Market Hypothesis</td><td>Journal</td><td>1970</td><td><span class="tag yellow">4/5</span></td></tr>
+              <tr><td>2</td><td>LeCun et al. — Deep Learning</td><td>Nature</td><td>2015</td><td><span class="tag green">5/5</span></td></tr>
+              <tr><td>3</td><td>Fischer &amp; Krauss — LSTM Stock Prediction</td><td>Journal</td><td>2018</td><td><span class="tag green">5/5</span></td></tr>
+              <tr><td>4</td><td>Bao et al. — Wavelet + Deep Learning</td><td>Journal</td><td>2017</td><td><span class="tag green">5/5</span></td></tr>
+              <tr><td>5</td><td>Zhang et al. — Multi-frequency Data</td><td>Journal</td><td>2017</td><td><span class="tag green">5/5</span></td></tr>
+              <tr><td>6</td><td>Sezer et al. — Survey Deep Learning Finance</td><td>Journal</td><td>2020</td><td><span class="tag green">5/5</span></td></tr>
+              <tr><td>7</td><td>Hochreiter &amp; Schmidhuber — LSTM</td><td>Journal</td><td>1997</td><td><span class="tag yellow">4/5</span></td></tr>
+              <tr><td>8</td><td>Goodfellow — Deep Learning (textbook)</td><td>MIT Press</td><td>2016</td><td><span class="tag green">5/5</span></td></tr>
+              <tr><td>9</td><td>Bishop — Pattern Recognition</td><td>Springer</td><td>2006</td><td><span class="tag yellow">4/5</span></td></tr>
+              <tr><td>10</td><td>Investopedia</td><td>Internet</td><td>2023</td><td><span class="tag">3/5</span></td></tr>
+              <tr><td>11</td><td>Kaggle Datasets &amp; Notebooks</td><td>Internet</td><td>2024</td><td><span class="tag">3/5</span></td></tr>
+              <tr><td>12</td><td>Google AI Blog</td><td>Internet</td><td>2024</td><td><span class="tag yellow">4/5</span></td></tr>
+            </tbody>
+          </table>
+          <a href="https://raw.githubusercontent.com/Min23-tech/portfolio/main/2.4.2.docx" target="_blank" rel="noopener" class="dl-btn" style="margin-top:16px;">↓ Tải file bài tập · 2_4_2.docx</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ DETAIL: BÀI 03 ══ -->
+    <section id="assign-3">
+      <div class="section-label">Bài 03 · 4.2 — Prompt Engineering</div>
+      <div class="section-title">Bộ Prompt mẫu cho 3 tác vụ học tập</div>
+      <p style="color:var(--text-dim);font-size:13px;margin-bottom:20px;">9 prompt theo 3 cấp độ: Cơ bản → Cải tiến → Nâng cao, áp dụng Bloom's Taxonomy.</p>
+
+      <div style="margin-bottom:24px;">
+        <div style="font-family:var(--display);font-size:13px;color:var(--text-head);margin-bottom:12px;">Tác vụ A — Tóm tắt bài đọc</div>
+        <div class="prompt-card">
+          <div class="prompt-level">A1 · CƠ BẢN</div>
+          Tóm tắt văn bản sau thành đoạn ngắn.
+        </div>
+        <div class="prompt-card" style="border-left-color:var(--accent2);">
+          <div class="prompt-level" style="color:var(--accent2);">A2 · CẢI TIẾN</div>
+          Bạn là trợ lý học tập. Đọc văn bản sau và viết tóm tắt 150–200 từ gồm: mục tiêu nghiên cứu, phương pháp, kết quả chính, kết luận. Dùng ngôn ngữ rõ ràng; phần kết quả liệt kê bằng gạch đầu dòng.
+        </div>
+        <div class="prompt-card" style="border-left-color:var(--success);">
+          <div class="prompt-level" style="color:var(--success);">A3 · NÂNG CAO</div>
+          Bạn là giảng viên đại học chuyên ngành. Trước khi tóm tắt, liệt kê 3 câu hỏi kiểm tra. Sau đó tóm tắt theo cấu trúc: (1) bối cảnh &amp; mục tiêu; (2) phương pháp; (3) kết quả chính; (4) ý nghĩa &amp; hạn chế; (5) 2 gợi ý mở rộng.
+        </div>
+      </div>
+
+      <div class="assign-block">
+        <div class="assign-header">
+          <div><div class="assign-id">Kết quả thử nghiệm</div><div class="assign-name">Bảng so sánh 9 prompt</div></div>
+        </div>
+        <div class="assign-body">
+          <table class="data-table">
+            <thead><tr><th>Tác vụ</th><th>Phiên bản</th><th>Chính xác</th><th>Rõ ràng</th><th>Đầy đủ</th><th>Hữu dụng</th></tr></thead>
+            <tbody>
+              <tr><td>Tóm tắt</td><td><span class="tag">Cơ bản</span></td><td>3</td><td>3</td><td>2</td><td>2</td></tr>
+              <tr><td>Tóm tắt</td><td><span class="tag yellow">Cải tiến</span></td><td>4</td><td>4</td><td>4</td><td>4</td></tr>
+              <tr><td>Tóm tắt</td><td><span class="tag green">Nâng cao</span></td><td>5</td><td>5</td><td>5</td><td>5</td></tr>
+              <tr><td>Giải thích</td><td><span class="tag">Cơ bản</span></td><td>3</td><td>3</td><td>2</td><td>2</td></tr>
+              <tr><td>Giải thích</td><td><span class="tag yellow">Cải tiến</span></td><td>4</td><td>4</td><td>4</td><td>4</td></tr>
+              <tr><td>Giải thích</td><td><span class="tag green">Nâng cao</span></td><td>5</td><td>5</td><td>5</td><td>5</td></tr>
+              <tr><td>Câu hỏi ôn</td><td><span class="tag">Cơ bản</span></td><td>2</td><td>3</td><td>2</td><td>2</td></tr>
+              <tr><td>Câu hỏi ôn</td><td><span class="tag yellow">Cải tiến</span></td><td>4</td><td>4</td><td>4</td><td>4</td></tr>
+              <tr><td>Câu hỏi ôn</td><td><span class="tag green">Nâng cao</span></td><td>5</td><td>5</td><td>5</td><td>5</td></tr>
+            </tbody>
+          </table>
+          <a href="https://raw.githubusercontent.com/Min23-tech/portfolio/main/3.4.2%20bt.docx" target="_blank" rel="noopener" class="dl-btn" style="margin-top:16px;">↓ Tải file bài tập · 3_4_2_bt.docx</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ DETAIL: BÀI 04 ══ -->
+    <section id="assign-4">
+      <div class="section-label">Bài 04 · 4.3 — Hợp tác trực tuyến</div>
+      <div class="section-title">Báo cáo cá nhân: Công cụ hợp tác Nhóm 38</div>
+      <p style="color:var(--text-dim);font-size:13px;margin-bottom:20px;">Dự án: Phân tích lưới điện thành phố thông minh · 16/4/2026 – 2/5/2026</p>
+
+      <div class="card-grid" style="margin-bottom:20px;">
+        <div class="card">
+          <div class="card-title">📱 Messenger</div>
+          <div class="card-desc">Kênh liên lạc chính. Thảo luận, chốt mô hình thuật toán, lên lịch họp nhóm trực tuyến.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">☁️ Google Drive</div>
+          <div class="card-desc">Lưu trữ dataset thô và tài liệu nghiên cứu chung. Tuân thủ quy định đặt tên file nghiêm ngặt.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">📄 Google Docs</div>
+          <div class="card-desc">Tổng hợp tài liệu từ 3 phần phân tích của các thành viên, tinh chỉnh vào báo cáo tổng kết.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">✅ Notion</div>
+          <div class="card-desc">Theo dõi các mốc: làm sạch dữ liệu (26/4), hoàn thiện mô hình (30/4), nộp báo cáo (2/5).</div>
+        </div>
+      </div>
+
+      <div class="assign-block">
+        <div class="assign-header">
+          <div><div class="assign-id">Vai trò cá nhân</div><div class="assign-name">Đóng góp trong nhóm</div></div>
+        </div>
+        <div class="assign-body">
+          <div class="assign-desc">Đảm nhận <strong>tiền xử lý dữ liệu và lập trình thuật toán</strong>. Tham gia đầy đủ 2 buổi họp nhóm (16/4, 20/4). Chủ động dùng @mention để nhắc nhở deadline. Hỗ trợ thành viên Phạm Nhật Minh bằng cách cập nhật kết quả đầu ra để tạo biểu đồ trực quan cho slide.</div>
+          <a href="https://raw.githubusercontent.com/Min23-tech/portfolio/main/4.4.3.docx" target="_blank" rel="noopener" class="dl-btn">↓ Tải file bài tập · 4_4_3.docx</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ DETAIL: BÀI 05 ══ -->
+    <section id="assign-5">
+      <div class="section-label">Bài 05 · 4.2 — AI Tạo sinh</div>
+      <div class="section-title">Ứng dụng AI tạo sinh trong sáng tạo nội dung</div>
+      <p style="color:var(--text-dim);font-size:13px;margin-bottom:20px;">Dự án: Lộ trình học C++ cho người mới · Output: Infographic + Video Shorts + Bài viết chuyên sâu</p>
+
+      <div class="assign-block">
+        <div class="assign-header">
+          <div><div class="assign-id">So sánh AI text generation</div><div class="assign-name">Grok · DeepSeek · Llama</div></div>
+        </div>
+        <div class="assign-body">
+          <table class="data-table">
+            <thead><tr><th>Công cụ AI</th><th>Ưu điểm</th><th>Nhược điểm</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><span class="tag blue">Grok</span></td>
+                <td>Suy luận vượt trội, tích hợp dữ liệu thời gian thực từ X</td>
+                <td>Yêu cầu X Premium+, chi phí cao</td>
+              </tr>
+              <tr>
+                <td><span class="tag green">DeepSeek</span></td>
+                <td>Chi phí cực thấp, hiệu suất kỹ thuật cao, mạnh lập trình &amp; toán học</td>
+                <td>Văn phong khô cứng, thiếu sáng tạo trong giáo dục</td>
+              </tr>
+              <tr>
+                <td><span class="tag yellow">Llama</span></td>
+                <td>Mã nguồn mở, miễn phí, dễ tùy chỉnh &amp; triển khai cục bộ</td>
+                <td>Chất lượng không ổn định, phụ thuộc phần cứng</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="assign-block" style="margin-top:16px;">
+        <div class="assign-header">
+          <div><div class="assign-id">So sánh AI image generation</div><div class="assign-name">Flux AI · Ideogram</div></div>
+        </div>
+        <div class="assign-body">
+          <table class="data-table">
+            <thead><tr><th>Công cụ AI</th><th>Ưu điểm</th><th>Nhược điểm</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><span class="tag blue">Flux AI</span></td>
+                <td>Độ chi tiết cao, kiểm soát chính xác, linh hoạt cho concept art</td>
+                <td>Giao diện phức tạp, đòi hỏi kỹ năng viết prompt cao</td>
+              </tr>
+              <tr>
+                <td><span class="tag purple">Ideogram</span></td>
+                <td>Kết xuất chữ trong ảnh cực kỳ chính xác, phù hợp sản phẩm giáo dục</td>
+                <td>Ít linh hoạt về style so với Flux AI</td>
+              </tr>
+            </tbody>
+          </table>
+          <a href="https://raw.githubusercontent.com/Min23-tech/portfolio/main/5_4_2_new_AI.docx" target="_blank" rel="noopener" class="dl-btn" style="margin-top:16px;">↓ Tải file bài tập · 5_4_2_new_AI.docx</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ DETAIL: BÀI 06 ══ -->
+    <section id="assign-6">
+      <div class="section-label">Bài 06 · 4.4 — AI có trách nhiệm</div>
+      <div class="section-title">Sử dụng AI có trách nhiệm trong học tập</div>
+      <p style="color:var(--text-dim);font-size:13px;margin-bottom:20px;">Case study: Nâng cấp TicTacToe từ lập trình thủ tục lên OOP + SDL2 với sự hỗ trợ của Claude.</p>
+
+      <div class="card-grid" style="margin-bottom:20px;">
+        <div class="card">
+          <div class="card-title">✅ Hỗ trợ hợp lý</div>
+          <div class="card-desc">Dùng AI để giải thích khái niệm OOP, Interface. Gợi ý cấu trúc code khoa học hơn. "Học cùng AI" — người học vẫn hiểu và tự làm.</div>
+          <div class="tag-row"><span class="tag green">Hợp lệ</span></div>
+        </div>
+        <div class="card">
+          <div class="card-title">❌ Ranh giới gian lận</div>
+          <div class="card-desc">Nhờ AI viết toàn bộ bài từ đầu đến cuối và nộp mà không hiểu một dòng code nào. Không thể giải thích được bài làm của mình.</div>
+          <div class="tag-row"><span class="tag" style="color:#f85149;border-color:rgba(248,81,73,.3);background:rgba(248,81,73,.06);">Vi phạm</span></div>
+        </div>
+      </div>
+
+      <div class="assign-block">
+        <div class="assign-header">
+          <div><div class="assign-id">Nhật ký sử dụng Claude</div><div class="assign-name">Phân tích prompt &amp; đóng góp</div></div>
+        </div>
+        <div class="assign-body">
+          <div class="kv-grid" style="margin-bottom:16px;">
+            <div class="kv"><div class="kv-key">Công cụ AI</div><div class="kv-val">Claude 3.5 Sonnet</div></div>
+            <div class="kv"><div class="kv-key">Mức độ AI hỗ trợ</div><div class="kv-val">30% (cấu trúc)</div></div>
+            <div class="kv"><div class="kv-key">Mức độ sinh viên</div><div class="kv-val">70% (logic, fix lỗi, test)</div></div>
+            <div class="kv"><div class="kv-key">Trường nghiên cứu</div><div class="kv-val">RMIT Việt Nam</div></div>
+          </div>
+          <div class="code-block">
+<span class="cmt">// Prompt tìm hiểu cấu trúc</span>
+<span class="str">"Bạn có thể đọc và tóm tắt những gì tôi cần phải làm trong level 2?"</span>
+
+<span class="cmt">// Prompt giải thích khái niệm</span>
+<span class="str">"Tức là từ 1 code gốc to thì tôi sẽ tách ra thành nhiều file nhỏ?"</span>
+
+<span class="cmt">// Prompt giải quyết lỗi</span>
+<span class="str">"Tôi gặp lỗi include khi tách file, bạn có thể kiểm tra cấu trúc header?"</span>
+          </div>
+          <a href="https://raw.githubusercontent.com/Min23-tech/portfolio/main/6.4.4.docx" target="_blank" rel="noopener" class="dl-btn" style="margin-top:16px;">↓ Tải file bài tập · 6_4_4.docx</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ DETAIL: BÀI 07 ══ -->
+    <section id="assign-7">
+      <div class="section-label">Bài 07 · 4.1 — Tổng quan bằng AI</div>
+      <div class="section-title">ML trong phát hiện ung thư từ hình ảnh y tế</div>
+      <p style="color:var(--text-dim);font-size:13px;margin-bottom:20px;">Công cụ: Elicit / Consensus · 5 bài báo peer-reviewed từ 2017–2022</p>
+
+      <div class="assign-block">
+        <div class="assign-header">
+          <div><div class="assign-id">5 bài báo khoa học</div><div class="assign-name">Bảng so sánh tổng hợp</div></div>
+        </div>
+        <div class="assign-body">
+          <table class="data-table">
+            <thead><tr><th>#</th><th>Tác giả / Năm</th><th>Loại ung thư</th><th>Mô hình</th><th>Kết quả nổi bật</th></tr></thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>Esteva et al.<br/><span class="tag">2017</span></td>
+                <td>Ung thư da</td>
+                <td>CNN (Inception v3)</td>
+                <td>Nhạy 96% cho melanoma, ngang bác sĩ chuyên khoa</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>Ardila et al.<br/><span class="tag">2019</span></td>
+                <td>Ung thư phổi</td>
+                <td>3D Inception-ResNet</td>
+                <td>AUC 0.944; giảm 11% dương tính giả so với chuyên gia</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>Shen et al.<br/><span class="tag">2019</span></td>
+                <td>Ung thư vú</td>
+                <td>CNN + Transfer Learning</td>
+                <td>AUC 0.921 trên DDSM, tương đương đọc nhũ ảnh 2 bác sĩ</td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>Bulten et al.<br/><span class="tag">2022</span></td>
+                <td>Ung thư tuyến tiền liệt</td>
+                <td>PANDA (AI hỗ trợ)</td>
+                <td>Nâng weighted kappa từ 0.613 lên 0.695 (13 bác sĩ)</td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td>Wang et al.<br/><span class="tag">2021</span></td>
+                <td>Ung thư cổ tử cung</td>
+                <td>Vision Transformer + CNN</td>
+                <td>Độ chính xác 89.4%, AUC 0.96, nhạy 92.1% cho CIN2+</td>
+              </tr>
+            </tbody>
+          </table>
+          <a href="https://raw.githubusercontent.com/Min23-tech/portfolio/main/7_4_1_new.docx" target="_blank" rel="noopener" class="dl-btn" style="margin-top:16px;">↓ Tải file bài tập · 7_4_1_new.docx</a>
+        </div>
+      </div>
+
+      <div class="assign-block" style="margin-top:16px;">
+        <div class="assign-header">
+          <div><div class="assign-id">Nhận xét tổng hợp</div><div class="assign-name">Yếu tố quyết định hiệu quả AI y tế</div></div>
+        </div>
+        <div class="assign-body">
+          <div class="card-grid">
+            <div class="card">
+              <div class="card-title">📊 Dữ liệu huấn luyện</div>
+              <div class="card-desc">Chất lượng và quy mô dataset là yếu tố nền tảng. Cần dữ liệu lớn, đa dạng thiết bị chụp và nhóm dân số.</div>
+            </div>
+            <div class="card">
+              <div class="card-title">🧠 Kiến trúc mô hình</div>
+              <div class="card-desc">CNN và Vision Transformer đều cho kết quả tốt tuỳ loại ảnh. 3D CNN phù hợp cho CT scan.</div>
+            </div>
+            <div class="card">
+              <div class="card-title">🔍 Khả năng giải thích</div>
+              <div class="card-desc">Attention map, saliency map giúp bác sĩ tin tưởng và được chấp thuận trong thực hành lâm sàng.</div>
+            </div>
+            <div class="card">
+              <div class="card-title">🏥 Kiểm chứng lâm sàng</div>
+              <div class="card-desc">RCT như Bulten et al. (2022) là tiêu chuẩn vàng — còn hiếm trong AI y tế nhưng rất cần thiết.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER NOTE -->
+    <section style="text-align:center;padding:32px 56px;">
+      <div style="font-family:var(--mono);font-size:11px;color:var(--text-dim);">
+        <div style="margin-bottom:8px;color:var(--text-head);">Nguyễn Nhật Minh · 25024138</div>
+        <div>VNU1001_E252002 · Nhóm 38 · ĐHQG Hà Nội – UET</div>
+        <div style="margin-top:6px;">Nhập môn Khoa học Dữ liệu · 2025–2026</div>
+        <div style="margin-top:12px;font-size:10px;color:#333c4a;">
+          ⚠️ Các link tải file bài tập cần được cập nhật sau khi upload lên GitHub repository
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+  // Active nav highlight on scroll
+  const sections = document.querySelectorAll('section[id], .hero[id]');
+  const navItems = document.querySelectorAll('.nav-item');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navItems.forEach(item => {
+          item.classList.remove('active');
+          if (item.getAttribute('href') === '#' + entry.target.id) {
+            item.classList.add('active');
+          }
+        });
+      }
+    });
+  }, { threshold: 0.3 });
+
+  sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
